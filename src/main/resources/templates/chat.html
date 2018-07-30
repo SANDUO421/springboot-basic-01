@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>Home</title>
+		<script type="text/javascript" th:src="@{websocket/sockjs.min.js}"></script>
+		<script type="text/javascript" th:src="@{websocket/stomp.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/jquery-3.3.1.js}"></script>
+	</head>
+	<body>
+		<p>聊天室</p>
+		<form id="formId">
+			<textarea rows="4" cols="60" name="text" placeholder="请请输入聊天内容"></textarea>
+			<input type="submit" />
+		</form>
+		<script th:inline="javascript">
+			$("#formId").submit(function(e){
+				e.preventDefault();
+				var text = $("#formId").find('textarea[name="text"]').val();
+				console.log("text",text);
+				sendSpittle(text);
+			})
+			var sock = new SockJS("/endpointChat"); //endpoint
+			var stomp = Stomp.over(sock);
+			stomp.connect('guest','guest',function(frame){
+				stomp.subscribe("/user/queue/notifications",handleNotification);//发送消息只有多一个user才可以发送到指定用户
+			})
+			function handleNotification(message){
+				console.log("message:",message)
+				$("#output").append("<b>Recived:"+message.body+" </b></br>")
+			}
+			function sendSpittle(text){
+				stomp.send("/chat",{},text);
+			}
+			$("#stop").click(function(){
+				sock.close();
+			})
+		</script>
+		<div id="output"></div>
+	</body>
+	
+</html>

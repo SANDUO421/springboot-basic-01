@@ -1,0 +1,38 @@
+# modified tomcat port and visit path
+server: 
+  port: 8888
+  ssl:
+    enabled: true
+    key-alias: tomcat
+    key-store: server.keystore
+    key-store-password: sanduo
+    key-store-type: JKS
+#    ciphers:
+#    - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+#    - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+#    - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+#    - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+#    - TLS_ECDHE_RSA_WITH_RC4_128_SHA
+#    - TLS_RSA_WITH_AES_128_CBC_SHA256
+#    - TLS_RSA_WITH_AES_128_CBC_SHA
+#    - TLS_RSA_WITH_AES_256_CBC_SHA256
+#    - TLS_RSA_WITH_AES_256_CBC_SHA
+#    - SSL_RSA_WITH_RC4_128_SHA
+
+           
+#  servlet:
+#    context-path: /helloboot
+
+# defined property
+author: 
+  name: sanduo
+  age: 25
+# profile log default logback
+
+logging:
+  file: logs/log.log
+  level: 
+    org.springframework.web: DEBUG
+      
+    
+
